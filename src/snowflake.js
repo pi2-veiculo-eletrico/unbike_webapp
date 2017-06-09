@@ -102,6 +102,8 @@ import ProfileInitialState from './reducers/profile/profileInitialState'
 import pack from '../package'
 var VERSION = pack.version
 
+import SideMenu from 'react-native-side-menu'
+
 /**
  *
  * ## Initial state
@@ -120,7 +122,8 @@ function getInitialState () {
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 70
+    height: 70,
+    backgroundColor: 'rgba(255,255,255,0.9)'
   }
 })
 
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
  */
 class TabIcon extends React.Component {
   render () {
-    var color = this.props.selected ? '#FF3366' : '#FFB3B3'
+    var color = this.props.selected ? '#22BCCD' : '#b0f5fc'
     return (
       <View style={{flex: 1, flexDirection: 'column', alignItems: 'center', alignSelf: 'center'}}>
         <Icon style={{color: color}} name={this.props.iconName} size={30} />
@@ -155,6 +158,7 @@ export default function native (platform) {
     render () {
       const store = configureStore(getInitialState())
 
+
             // configureStore will combine reducers from snowflake and main application
             // it will then create the store based on aggregate state from all reducers
       store.dispatch(setPlatform(platform))
@@ -166,8 +170,11 @@ export default function native (platform) {
       return (
 
         <Provider store={store}>
+
           <Router sceneStyle={{ backgroundColor: 'white' }}>
+
             <Scene key='root' hideNavBar>
+
               <Scene key='App'
                 component={App}
                 type='replace'

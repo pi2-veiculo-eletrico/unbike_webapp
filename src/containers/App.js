@@ -68,8 +68,6 @@ function mapDispatchToProps (dispatch) {
 
 var styles = StyleSheet.create({
   container: {
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
     marginTop: 80,
     padding: 10
   },
@@ -115,8 +113,6 @@ let App = React.createClass({
           currentState={this.props.global.currentState}
           onGetState={this.props.actions.getState}
           onSetState={this.props.actions.setState} />
-
-        <Text style={styles.summary}>Snowflake {I18n.t('App.version')}:{this.props.deviceVersion}</Text>
 
       </View>
     )

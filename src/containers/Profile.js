@@ -38,6 +38,9 @@ import Header from '../components/Header'
  * The itemCheckbox will display the state of the email verified
  */
 import ItemCheckbox from '../components/ItemCheckbox'
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+import PopupDialog, { SlideAnimation } from 'react-native-popup-dialog';
 /**
  * The necessary React components
  */
@@ -45,7 +48,10 @@ import React, {Component} from 'react'
 import
 {
   StyleSheet,
-  View
+  View,
+  TextInput,
+  Text,
+  Alert,
 }
 from 'react-native'
 
@@ -111,7 +117,8 @@ class Profile extends Component {
     this.state = {
       formValues: {
         username: '',
-        email: ''
+        email: '',
+        unbike: 'Nenhuma UnBike conectada',
       }
     }
   }
@@ -131,6 +138,10 @@ class Profile extends Component {
     }
     this.setState({value})
   }
+
+  emparelhar() {
+
+  }
   /**
    * ### componentWillReceiveProps
    *
@@ -141,7 +152,8 @@ class Profile extends Component {
     this.setState({
       formValues: {
         username: props.profile.form.fields.username,
-        email: props.profile.form.fields.email
+        email: props.profile.form.fields.email,
+        unbike: 'Nenhuma UnBike conectada'
       }
     })
   }
@@ -159,7 +171,8 @@ class Profile extends Component {
       this.setState({
         formValues: {
           username: this.props.profile.form.fields.username,
-          email: this.props.profile.form.fields.email
+          email: this.props.profile.form.fields.email,
+          unbike: ''
         }
       })
     }
@@ -176,7 +189,8 @@ class Profile extends Component {
 
     let ProfileForm = t.struct({
       username: t.String,
-      email: t.String
+      email: t.String,
+      unbike: t.String,
     })
     /**
      * Set up the field definitions.  If we're fetching, the fields
@@ -198,7 +212,12 @@ class Profile extends Component {
           editable: !this.props.profile.form.isFetching,
           hasError: this.props.profile.form.fields.emailHasError,
           error: this.props.profile.form.fields.emailErrorMsg
+        },
+        unbike: {
+          label: 'Minha UnBike',
+          editable: false,
         }
+
       }
     }
 
@@ -240,9 +259,19 @@ class Profile extends Component {
             value={this.state.formValues}
             onChange={this.onChange.bind(self)}
           />
-          <ItemCheckbox text={verfiedText}
+          <Text
+            style={{color:"#22BCCD", textDecorationLine: 'underline'}}
+            onPress={()=>{
+              Alert.alert('Procurando UnBike','Aguarde enquanto conectamos com sua UnBike.')
+            }}
+            >
+            {'Procurar UnBike'} <Icon name="search" size={15} color="#22BCCD" />
+          </Text>
+
+
+          {/* <ItemCheckbox text={verfiedText}
             disabled
-            checked={this.props.profile.form.fields.emailVerified} />
+            checked={this.props.profile.form.fields.emailVerified} /> */}
         </View>
 
         <FormButton
